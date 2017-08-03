@@ -10,6 +10,8 @@
 
 #include <stdint.h>
 
+#define CMP_ID_SIZE		(1)
+
 class CMPID {
 public:
 	CMPID();

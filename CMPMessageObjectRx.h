@@ -8,7 +8,7 @@ class CMPPayload;
 class CMPMessageObjectRx {
 public:
 	CMPMessageObjectRx();
-	virtual void rxCallback(CMPPayload const &data);
+	virtual void rxCallback(CMPPayload const &data) {(void)data;}
 
 
 private:
