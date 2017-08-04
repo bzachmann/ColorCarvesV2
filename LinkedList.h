@@ -12,28 +12,23 @@ template <class T> class LinkedList : public T
 {
 public:
 
-	LinkedList<T>(): T(), nextObj(0) {}
+    LinkedList<T>(): T(), nextObj(0) {}
 
-	LinkedList<T> * getNext()
+    LinkedList<T> * getNext()
+    {
+        return nextObj;
+    }
+
+    void add(LinkedList<T> * newObj)
 	{
-		return nextObj;
-	}
-
-	void add(T * newObj)
-	{
-		LinkedList<T> * lastObjPtr = nextObj;
-
-		while(lastObjPtr != 0)
-		{
-			lastObjPtr = lastObjPtr->getNext();
-		}
-
-		lastObjPtr->setNext(newObj);
-	}
-
-	void setNext(LinkedList<T> * obj)
-	{
-		nextObj = obj;
+        if(nextObj == 0)
+        {
+            nextObj = newObj;
+        }
+        else
+        {
+            nextObj->add(newObj);
+        }
 	}
 
 
