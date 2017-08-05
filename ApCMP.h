@@ -8,6 +8,8 @@
 #ifndef APCMP_H_
 #define APCMP_H_
 
+#include "cmprxledset.h"
+
 class ApCMP {
 public:
 	ApCMP();
@@ -16,6 +18,8 @@ public:
 
 public:
 	static ApCMP * inst;
+
+	CMPRxLEDSET ledsetMsgRx;
 };
 
 #endif /* APCMP_H_ */

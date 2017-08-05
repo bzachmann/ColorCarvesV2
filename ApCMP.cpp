@@ -10,14 +10,15 @@
 
 static ApCMP * ApCMP::inst;
 
-ApCMP::ApCMP()
+ApCMP::ApCMP() :
+		ledsetMsgRx()
 {
 
 }
 
 void ApCMP::init()
 {
-
+	ledsetMsgRx.init();
 
 }
 
