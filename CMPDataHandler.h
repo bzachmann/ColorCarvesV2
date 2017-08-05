@@ -2,13 +2,15 @@
 #define CMPDATAHANDLER_H_
 
 #include "cmpmessage.h"
+#include "linkedlist.h"
 
-class CMPDataHandler {
+class CMPDataHandler : public LinkedList<CMPDataHandler>
+{
 public:
-	CMPDataHandler() : id() {}
+	CMPDataHandler() : LinkedList<CMPDataHandler>(), id() {}
     virtual void callback(CMPData * data) {(void)data;} //virtual
 
-private:
+public:
 	CMPID id;
 };
 

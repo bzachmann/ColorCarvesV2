@@ -15,7 +15,7 @@ public:
 	void run();
 
 public:
-	static ApMain inst;
+	static ApMain * inst;
 };
 
 #endif /* APMAIN_H_ */

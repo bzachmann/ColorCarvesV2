@@ -9,15 +9,27 @@
 
 class CMPPortRx {
 public:
-	CMPPortRx(Stream const * stream);
-	void init();
+	CMPPortRx();
+	void init(Stream const * stream);
 	void run();
+
+	bool available();
+	CMPPayload read();
+
+private:
+	void addToByteBuffer(uint8_t value);
+	void parseAndQueue();
+	void resetBuffer();
 
 public:
 	Stream * stream;
 
 	uint8_t byteBuffer[CMP_PAYLOAD_SIZE];
+
 	Fifo<CMPPayload, CMP_PORT_RX_PAYLOAD_FIFO_SIZE> messageFifo;
+
+	bool headerRcvd;
+	uint8_t byteBufferIndex;
 
 };
 

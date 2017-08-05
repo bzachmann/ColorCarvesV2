@@ -1,19 +1,21 @@
 #include <Arduino.h>
 
 //TODO create scheduler and move these there
+#include "apservice.h"
+#include "apcmp.h"
 #include "apmain.h"
-#include "CMPPortRx.h"
 
 void setup()
 {
 	Serial.begin(9600);
-	//CMPPort::inst.init();
-	ApMain::inst.init();
+	ApService::inst->init();
+	ApCMP::inst->init();
+	ApMain::inst->init();
 }
 
 void loop()
 {
-	//CMPPort::inst.run();
-	ApMain::inst.run();
-
+	ApService::inst->run();
+	ApCMP::inst->run();
+	ApMain::inst->run();
 }

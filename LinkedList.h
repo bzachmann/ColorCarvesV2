@@ -7,7 +7,7 @@ public:
 
     LinkedList<T>() : nextObj(0) {}
 
-    T * getNext()
+    T * next()
     {
         return nextObj;
     }
