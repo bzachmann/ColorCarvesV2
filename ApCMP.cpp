@@ -8,7 +8,7 @@
 #include "apcmp.h"
 #include "cmpport.h"
 
-static ApCMP * ApCMP::inst;
+ApCMP ApCMP::inst;
 
 ApCMP::ApCMP() :
 		ledsetMsgRx()

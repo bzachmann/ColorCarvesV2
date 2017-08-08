@@ -17,7 +17,7 @@ public:
 	void run();
 
 public:
-	static ApCMP * inst;
+	static ApCMP inst;
 
 	CMPRxLEDSET ledsetMsgRx;
 };

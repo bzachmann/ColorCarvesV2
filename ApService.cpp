@@ -8,7 +8,7 @@
 #include <Arduino.h>
 #include "ApService.h"
 
-static ApService * ApService::inst;
+ApService ApService::inst;
 
 ApService::ApService()
 {

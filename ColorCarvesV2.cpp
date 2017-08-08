@@ -8,14 +8,17 @@
 void setup()
 {
 	Serial.begin(9600);
-	ApService::inst->init();
-	ApCMP::inst->init();
-	ApMain::inst->init();
+	ApService::inst.init();
+	ApCMP::inst.init();
+	ApMain::inst.init();
+	Serial.println("init finished");
 }
 
 void loop()
 {
-	ApService::inst->run();
-	ApCMP::inst->run();
-	ApMain::inst->run();
+	Serial.println("run");
+	ApService::inst.run();
+	ApCMP::inst.run();
+	ApMain::inst.run();
+	delay(1000);
 }

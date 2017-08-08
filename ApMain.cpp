@@ -7,7 +7,7 @@
 
 #include "ApMain.h"
 
-static ApMain * ApMain::inst;
+ApMain ApMain::inst;
 
 ApMain::ApMain()
 {

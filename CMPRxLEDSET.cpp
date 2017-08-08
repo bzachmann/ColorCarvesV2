@@ -27,6 +27,6 @@ void CMPRxLEDSET::callback(CMPData * data)
 void CMPRxLEDSET::init()
 {
 	id.setID(LEDSET_ID);
-	ApService::inst->payloadHandler.registerDataHandler(this);
+	ApService::inst.payloadHandler.registerDataHandler(this);
 }
 

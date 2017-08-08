@@ -19,7 +19,7 @@ public:
 	void run();
 
 public:
-	static ApService * inst;
+	static ApService inst;
 
 	CMPPort cmpPort;
 	CMPPayloadHandlerRx payloadHandler;
