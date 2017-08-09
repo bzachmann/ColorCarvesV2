@@ -9,17 +9,30 @@
 
 ApMain ApMain::inst;
 
-ApMain::ApMain()
+ApMain::ApMain() :
+		tiltSensor()
 {
 
 }
 
 void ApMain::init()
 {
-
+	tiltSensor.init();
 }
 
 void ApMain::run()
 {
+	tiltSensor.run();
+
+	//speedSensor.run() //might be unnecessary
+
+	//ledTracker.setSpeed(speedSensor.getSpeed())
+	//ledTracker.run();
+
+
+	//ledstrip.setBaseOffset(tiltSensor.getAngleUnified())
+	//ledstrip.setBrightness(speedSensor.getSpeedUnified())
+	//ledstrip.setOnIndex(ledTracker.getLedIndex())
+	//ledstrip.run();
 
 }
