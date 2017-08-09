@@ -10,6 +10,8 @@
 
 #include "cmpdatahandler.h"
 
+#define LEDSET_ID		(0x10)
+
 class CMPRxLEDSET : public CMPDataHandler
 {
 public:

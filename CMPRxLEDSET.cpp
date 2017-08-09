@@ -11,8 +11,6 @@
 #warning remove this after testing done
 #include <Arduino.h>
 
-#define LEDSET_ID		(0x10)
-
 CMPRxLEDSET::CMPRxLEDSET() :
 	CMPDataHandler()
 {

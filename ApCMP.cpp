@@ -11,7 +11,8 @@
 ApCMP ApCMP::inst;
 
 ApCMP::ApCMP() :
-		ledsetMsgRx()
+		ledsetMsgRx(),
+		angsetMsgRx()
 {
 
 }
@@ -19,6 +20,7 @@ ApCMP::ApCMP() :
 void ApCMP::init()
 {
 	ledsetMsgRx.init();
+	angsetMsgRx.init();
 
 }
 

@@ -9,6 +9,7 @@
 #define APCMP_H_
 
 #include "cmprxledset.h"
+#include "cmprxangset.h"
 
 class ApCMP {
 public:
@@ -20,6 +21,7 @@ public:
 	static ApCMP inst;
 
 	CMPRxLEDSET ledsetMsgRx;
+	CMPRxANGSET angsetMsgRx;
 };
 
 #endif /* APCMP_H_ */
