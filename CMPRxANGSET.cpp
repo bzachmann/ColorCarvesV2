@@ -9,6 +9,8 @@
 #include "apservice.h"
 #include "apmain.h"
 
+#define SCALE_CMP_ANGLE		(0.1f)
+
 CMPRxANGSET::CMPRxANGSET() :
 	CMPDataHandler()
 {
@@ -17,8 +19,9 @@ CMPRxANGSET::CMPRxANGSET() :
 
 void CMPRxANGSET::callback(CMPData * data)
 {
-#warning todo do calculation here to set angle from data sent over CMP
-	ApMain::inst.tiltSensor.setAngleLimit(20.0);
+	uint16_t tempWord = (((uint16_t)data->getByte(0) << 2) | (data->getByte(1) >> 6));
+	float newAngleLimit = tempWord * SCALE_CMP_ANGLE;
+	ApMain::inst.tiltSensor.setAngleLimit(newAngleLimit);
 }
 
 void CMPRxANGSET::init()
