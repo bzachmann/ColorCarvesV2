@@ -19,7 +19,7 @@ CMPRxANGSET::CMPRxANGSET() :
 
 void CMPRxANGSET::callback(CMPData * data)
 {
-	uint16_t tempWord = (((uint16_t)data->getByte(0) << 2) | (data->getByte(1) >> 6));
+	uint16_t tempWord = (((uint16_t)(data->getByte(1) & 0x03)) << 8) | (data->getByte(0) & 0xFF);
 	float newAngleLimit = tempWord * SCALE_CMP_ANGLE;
 	ApMain::inst.tiltSensor.setAngleLimit(newAngleLimit);
 }

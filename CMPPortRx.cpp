@@ -66,11 +66,14 @@ void CMPPortRx::addToByteBuffer(uint8_t value)
 void CMPPortRx::parseAndQueue()
 {
 #warning "todo - this function is dependant on the layout of the message.  Switch this to a function call handled by Payload.  This will keep the CMPPortRx separate from message layout"
+	//Message always comes accross in the following order:
+	//Header, ID, Byte2, Byte1, Byte0.
+	//Pack accordingly
 	CMPPayload tempPayload;
 	tempPayload.id.setID(byteBuffer[0]);
-	tempPayload.data.setByte(0, byteBuffer[1]);
+	tempPayload.data.setByte(2, byteBuffer[1]);
 	tempPayload.data.setByte(1, byteBuffer[2]);
-	tempPayload.data.setByte(2, byteBuffer[3]);
+	tempPayload.data.setByte(0, byteBuffer[3]);
 
 	messageFifo.put(tempPayload);
 	resetBuffer();

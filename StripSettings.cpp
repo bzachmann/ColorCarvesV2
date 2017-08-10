@@ -7,8 +7,3 @@
 
 #include "StripSettings.h"
 
-StripSettings::StripSettings() {
-	// TODO Auto-generated constructor stub
-
-}
-
