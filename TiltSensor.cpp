@@ -6,8 +6,8 @@
  */
 
 #include "TiltSensor.h"
-#define max(a,b) ((a)>(b)?(a):(b))
-#define min(a,b) ((a)<(b)?(a):(b))
+#define max(a,b) (((a)>(b))?(a):(b))
+#define min(a,b) (((a)<(b))?(a):(b))
 
 bool TiltSensor::init()
 {
@@ -49,7 +49,7 @@ float TiltSensor::getAngle()
 
 uint16_t TiltSensor::getAngleUnified()
 {
-	return convertUnified(angle, angleLimit, (angleLimit * -1), UNIFIED_VALUE_LOW, UNIFIED_VALUE_HIGH);
+	return convertUnified(angle, (angleLimit * -1), angleLimit, UNIFIED_VALUE_LOW, UNIFIED_VALUE_HIGH);
 }
 
 float TiltSensor::getAngleLimit()
@@ -67,8 +67,8 @@ void TiltSensor::setAngleLimit(float limit)
 
 void TiltSensor::setAngle(float degrees)
 {
-	angle = min(degrees, (angleLimit));
-	angle = max(degrees, (angleLimit * -1));
+	angle = min(degrees, angleLimit);
+	angle = max(angle, (angleLimit * -1));
 }
 
 uint16_t TiltSensor::convertUnified(

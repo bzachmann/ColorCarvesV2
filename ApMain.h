@@ -9,6 +9,10 @@
 #define APMAIN_H_
 
 #include "tiltsensor.h"
+#include "ledstrip.h"
+
+#define	NUM_LEDS			(33)
+#define	PIN_LED_STRIP		(6)
 
 class ApMain {
 public:
@@ -20,6 +24,8 @@ public:
 	static ApMain inst;
 
 	TiltSensor tiltSensor;
+	LEDStrip<NUM_LEDS, PIN_LED_STRIP> ledStrip;
+
 };
 
 #endif /* APMAIN_H_ */

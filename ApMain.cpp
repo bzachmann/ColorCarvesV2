@@ -7,10 +7,14 @@
 
 #include "ApMain.h"
 
+#warning todo remove this when testing done
+#include <Arduino.h>
+
 ApMain ApMain::inst;
 
 ApMain::ApMain() :
-		tiltSensor()
+		tiltSensor(),
+		ledStrip()
 {
 
 }
@@ -18,6 +22,10 @@ ApMain::ApMain() :
 void ApMain::init()
 {
 	tiltSensor.init();
+	ledStrip.init();
+
+#warning todo change this to restoring from eeprom
+	ledStrip.setOffsetInfluencedEnabled(true);
 }
 
 void ApMain::run()
@@ -29,10 +37,10 @@ void ApMain::run()
 	//ledTracker.setSpeed(speedSensor.getSpeed())
 	//ledTracker.run();
 
-
-	//ledstrip.setBaseOffset(tiltSensor.getAngleUnified())
+	Serial.println(tiltSensor.getAngleUnified());
+	ledStrip.setInfluencedBaseOffset(tiltSensor.getAngleUnified());
 	//ledstrip.setBrightness(speedSensor.getSpeedUnified())
 	//ledstrip.setOnIndex(ledTracker.getLedIndex())
-	//ledstrip.run();
+	ledStrip.run();
 
 }
