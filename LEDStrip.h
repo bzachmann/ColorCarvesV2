@@ -94,7 +94,7 @@ private:
 	void updateBrightness()
 	{
 		uint8_t activeBrightness = (brightnessInfluencedEnabled ? influencedBrightness : unInfluencedBrightness);
-		leds.setBrightness(influencedBrightness);
+		leds.setBrightness(activeBrightness);
 	}
 
 	void updateColors()

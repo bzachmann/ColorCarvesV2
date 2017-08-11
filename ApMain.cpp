@@ -7,9 +7,6 @@
 
 #include "ApMain.h"
 
-#warning todo remove this when testing done
-#include <Arduino.h>
-
 ApMain ApMain::inst;
 
 ApMain::ApMain() :
@@ -37,7 +34,6 @@ void ApMain::run()
 	//ledTracker.setSpeed(speedSensor.getSpeed())
 	//ledTracker.run();
 
-	Serial.println(tiltSensor.getAngleUnified());
 	ledStrip.setInfluencedBaseOffset(tiltSensor.getAngleUnified());
 	//ledstrip.setBrightness(speedSensor.getSpeedUnified())
 	//ledstrip.setOnIndex(ledTracker.getLedIndex())

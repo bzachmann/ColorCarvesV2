@@ -52,17 +52,18 @@ uint8_t LEDSetting::baseFunc(uint16_t value)
 	uint8_t retVal = 0;
 	if(normalizedValue <= 255)
 	{
-		retVal = value;
+		retVal = normalizedValue;
 	}
 	else if((normalizedValue > 255) && (normalizedValue <= 510))
 	{
-		retVal = 510 - value;
+		retVal = 510 - normalizedValue;
 	}
 	else
 	{
 		retVal = 0;
 	}
 
+	return retVal;
 }
 
 uint8_t LEDSetting::colorFunc(uint16_t value, color_t color)

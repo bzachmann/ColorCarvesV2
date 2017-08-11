@@ -11,14 +11,14 @@ void setup()
 	ApService::inst.init();
 	ApCMP::inst.init();
 	ApMain::inst.init();
-	Serial.println("init finished");
+	//Serial.println("init finished");
 }
 
 void loop()
 {
-	Serial.println("run");
+	//Serial.println("run");
 	ApService::inst.run();
 	ApCMP::inst.run();
 	ApMain::inst.run();
-	delay(1000);
+	//delay(1000);
 }
