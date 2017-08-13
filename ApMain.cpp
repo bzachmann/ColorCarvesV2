@@ -12,6 +12,7 @@ ApMain ApMain::inst;
 ApMain::ApMain() :
 		tiltSensor(),
 		speedSensor(),
+		ledTracker(NUM_LEDS),
 		ledStrip()
 {
 
@@ -21,27 +22,39 @@ void ApMain::init()
 {
 	tiltSensor.init();
 	speedSensor.init(); //note: does nothing
+	ledTracker.init();
 	ledStrip.init();
 
 #warning todo change this to restoring from eeprom
 	//speedSensor.setMaxSpeed(4.0);
 	//speedSensor.setMinSpeed(0.0);
+
 	ledStrip.setOffsetInfluencedEnabled(true);
-	ledStrip.setBrightnessInfluencedEnabled(true);
+	//ledStrip.setBrightnessInfluencedEnabled(true);
+	//ledStrip.setPatternInfluencedEnabled(true);
 
 }
 
 void ApMain::run()
 {
+	//run sensors
 	tiltSensor.run();
 	speedSensor.run();
+	ledTracker.setSpeed(speedSensor.getSpeed());
+	ledTracker.run();
 
-	//ledTracker.setSpeed(speedSensor.getSpeed())
-	//ledTracker.run();
-
+	//Use sensor values to adjust strip
 	ledStrip.setInfluencedBaseOffset(tiltSensor.getAngleUnified());
+	//ledStrip.setInfluencedBaseOffset(speedSensor.getSpeedUnified());
+
 	ledStrip.setInfluencedBrightnessUnified(speedSensor.getSpeedUnified());
-	//ledstrip.setOnIndex(ledTracker.getLedIndex())
+	//ledStrip.setInfluencedBrightnessUnified(tiltSensor.getAngleUnified());
+
+	//ledStrip.setOnIndexUnified(tiltSensor.getAngleUnified());
+	//ledStrip.setOnIndexUnified(speedSensor.getSpeedUnified());
+	ledStrip.setOnIndex(ledTracker.getLEDIndex());
+
+	//run strip
 	ledStrip.run();
 
 }

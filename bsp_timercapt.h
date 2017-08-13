@@ -15,6 +15,10 @@
 //#endif
 
 void bsp_timercapt_init(uint8_t clockMHz, uint8_t prescaler);
+
+uint32_t bsp_timercapt_elapsedTicks();
+uint32_t bsp_timercapt_elapsedUs();
+
 uint32_t bsp_timercapt_ticksBetweenCaptures(void);
 uint32_t bsp_timercapt_usBetweenCaptures(void);
 uint32_t bsp_timercapt_ticksSinceCapture(void);

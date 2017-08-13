@@ -37,6 +37,28 @@ void bsp_timercapt_init(uint8_t clockMHz, uint8_t prescaler)
 	SREG |= (1 << 7);  //global interrupt enable
 }
 
+//*****************************************************************************
+/*
+ * continuous timer that overflows every
+ * 0xFFFFFFFF counts = 4294967295 counts
+ * (with 16Mhz clock) = 268435455.9375 us  ~ 268.4354559375 s ~ 4.47 minutes
+ *
+ *///**************************************************************************
+uint32_t bsp_timercapt_elapsedTicks()
+{
+	return ( (((uint32_t)(countUpper16)) << 16) | TCNT1);
+}
+
+uint32_t bsp_timercapt_elapsedUs()
+{
+	uint32_t retVal = 0;
+	if(ticksPerUs > 0)
+	{
+		retVal = bsp_timercapt_elapsedTicks() / ticksPerUs;
+	}
+	return retVal;
+}
+
 uint32_t bsp_timercapt_ticksBetweenCaptures(void)
 {
 	return ticksBetweenCaptures;

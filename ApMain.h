@@ -10,6 +10,7 @@
 
 #include "tiltsensor.h"
 #include "speedsensor.h"
+#include "ledtracker.h"
 #include "ledstrip.h"
 
 #define	NUM_LEDS			(33)
@@ -26,6 +27,7 @@ public:
 
 	TiltSensor tiltSensor;
 	SpeedSensor speedSensor;
+	LEDTracker ledTracker;
 
 	LEDStrip<NUM_LEDS, PIN_LED_STRIP> ledStrip;
 };
