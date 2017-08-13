@@ -15,8 +15,8 @@
 
 volatile uint32_t tickOld = 0;
 volatile uint16_t countUpper16 = 0;
-volatile uint32_t ticksBetweenCaptures = 0;
-static uint32_t ticksSinceLastCapture = 0;
+volatile uint32_t ticksBetweenCaptures = 0xFFFFFFFF;
+static uint32_t ticksSinceLastCapture = 0xFFFFFFFF;
 volatile bool resetTicksSinceLastCapture = false;
 volatile uint8_t capturePrescaler = 0;
 static uint8_t ticksPerUs = 0;

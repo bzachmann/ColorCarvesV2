@@ -11,6 +11,7 @@ ApMain ApMain::inst;
 
 ApMain::ApMain() :
 		tiltSensor(),
+		speedSensor(),
 		ledStrip()
 {
 
@@ -19,23 +20,27 @@ ApMain::ApMain() :
 void ApMain::init()
 {
 	tiltSensor.init();
+	speedSensor.init(); //note: does nothing
 	ledStrip.init();
 
 #warning todo change this to restoring from eeprom
+	//speedSensor.setMaxSpeed(4.0);
+	//speedSensor.setMinSpeed(0.0);
 	ledStrip.setOffsetInfluencedEnabled(true);
+	ledStrip.setBrightnessInfluencedEnabled(true);
+
 }
 
 void ApMain::run()
 {
 	tiltSensor.run();
-
-	//speedSensor.run() //might be unnecessary
+	speedSensor.run();
 
 	//ledTracker.setSpeed(speedSensor.getSpeed())
 	//ledTracker.run();
 
 	ledStrip.setInfluencedBaseOffset(tiltSensor.getAngleUnified());
-	//ledstrip.setBrightness(speedSensor.getSpeedUnified())
+	ledStrip.setInfluencedBrightnessUnified(speedSensor.getSpeedUnified());
 	//ledstrip.setOnIndex(ledTracker.getLedIndex())
 	ledStrip.run();
 

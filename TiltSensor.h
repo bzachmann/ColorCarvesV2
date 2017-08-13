@@ -13,8 +13,6 @@
 #define DEFAULT_BNO055_ID		(21)
 #define DEFAULT_ANGLE_LIMIT		(50.0f)
 #define MAX_EULER_ANGLE			(180.0f)
-#define UNIFIED_VALUE_LOW		(0)
-#define UNIFIED_VALUE_HIGH		(765)
 
 class TiltSensor {
 public:

@@ -11,6 +11,9 @@
 #include "cmpport.h"
 #include "cmppayloadhandlerrx.h"
 
+#define UNIFIED_VALUE_LOW		(0)
+#define UNIFIED_VALUE_HIGH		(765)
+
 class ApService {
 public:
 	ApService();
