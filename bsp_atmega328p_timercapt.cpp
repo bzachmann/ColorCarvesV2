@@ -4,18 +4,20 @@
  *  Created on: Aug 12, 2017
  *      Author: Boston
  */
-
-#ifndef BSP_ATMEGA328P_TIMERCAPT_C_
-#define BSP_ATMEGA328P_TIMERCAPT_C_
+#include "bsp_atmega328p_timercapt.h"
 
 #warning todo try to switch to other header files to cut out arduino middle sw
 #include <Arduino.h>
 //#include <avr/io.h>
 //#include <avr/interrupt.h>
+#include <stdint.h>
+#include <stdbool.h>
 
 volatile uint32_t tickOld = 0;
 volatile uint16_t countUpper16 = 0;
 volatile uint32_t ticksBetweenCaptures = 0;
+static uint32_t ticksSinceLastCapture = 0;
+volatile bool resetTicksSinceLastCapture = false;
 volatile uint8_t capturePrescaler = 0;
 static uint8_t ticksPerUs = 0;
 
@@ -23,7 +25,7 @@ static uint8_t ticksPerUs = 0;
 //how how oftne does uppoer 16 overflow?
 //how often do you need to interruprt (prescaler) times in order to be accurate?
 
-void bsp_timercapt_init(uint8_t, clockMHz, uint8_t prescaler)
+void bsp_timercapt_init(uint8_t clockMHz, uint8_t prescaler)
 {
 	ticksPerUs = clockMHz;
 	capturePrescaler = prescaler;
@@ -35,12 +37,12 @@ void bsp_timercapt_init(uint8_t, clockMHz, uint8_t prescaler)
 	SREG |= (1 << 7);  //global interrupt enable
 }
 
-uint32_t bsp_timercapt_ticksBetweenCaptures()
+uint32_t bsp_timercapt_ticksBetweenCaptures(void)
 {
 	return ticksBetweenCaptures;
 }
 
-uint32_t bsp_timercapt_usBetweenCaptures()
+uint32_t bsp_timercapt_usBetweenCaptures(void)
 {
 	uint32_t retVal = 0;
 	if(ticksPerUs > 0)
@@ -51,30 +53,53 @@ uint32_t bsp_timercapt_usBetweenCaptures()
 	return retVal;
 }
 
-void bsp_timercapt_run()
+uint32_t bsp_timercapt_ticksSinceCapture(void)
 //*****************************************************************************
 /*
- * must be run at a rate faster than ? ms
+ * if not called within
+ * 0xFFFFFFFF counts = 4294967295 counts
+ * (with 16Mhz clock) = 268435455.9375 us  ~ 268.4354559375 s ~ 4.47 minutes
+ *  since last capture or last call, the
+ * time will be off due to overflow.
  *
  *///**************************************************************************
 {
+	uint32_t oldTickCapture = tickOld;
+	uint32_t elapsedTicks = ( (((uint32_t)(countUpper16)) << 16) | TCNT1);
+	elapsedTicks -= oldTickCapture;
 
+	if(resetTicksSinceLastCapture)
+	{
+		ticksSinceLastCapture = 0;
+		resetTicksSinceLastCapture = false;
+	}
+
+	if(elapsedTicks > ticksSinceLastCapture)
+	{
+		ticksSinceLastCapture = elapsedTicks;
+	}
+	else
+	{
+		ticksSinceLastCapture = 0xFFFFFFFF;
+	}
+	return ticksSinceLastCapture;
 }
 
-uint32_t bsp_timercapt_ticksSinceCapture()
+uint32_t bsp_timercapt_usSinceCapture(void)
 {
-	uint32_t tickNew =
-}
-
-uint32_t bsp_timercapt_usSinceCapture()
-{
-
+	uint32_t retVal = 0;
+	if(ticksPerUs > 0)
+	{
+		retVal = bsp_timercapt_ticksSinceCapture() / ticksPerUs;
+	}
+	return retVal;
 }
 
 
 ISR(TIMER1_CAPT_vect)
 {
-	static volatile interruptCount = 0;
+	static volatile uint8_t interruptCount = 0;
+
 	interruptCount++;
 	if(capturePrescaler > 0)
 	{
@@ -86,6 +111,7 @@ ISR(TIMER1_CAPT_vect)
 
 			tickOld = tickNew;
 			interruptCount = 0;
+			resetTicksSinceLastCapture = true;
 		}
 	}
 }
@@ -94,7 +120,3 @@ ISR(TIMER1_OVF_vect)
 {
 	countUpper16++;
 }
-
-
-
-#endif /* BSP_ATMEGA328P_TIMERCAPT_C_ */
