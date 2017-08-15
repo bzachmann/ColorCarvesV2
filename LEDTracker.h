@@ -11,7 +11,7 @@
 #include <stdint.h>
 #include "timer.h"
 
-#define DEFAULT_CT_LED_SPACING		(14.5f)
+#define DEFAULT_CT_LED_SPACING		(17.0f)
 
 class LEDTracker {
 public:
