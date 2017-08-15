@@ -50,6 +50,7 @@ public:
 		leds.show();
 	}
 
+	uint8_t getNumLeds() { return numLeds;}
 	void setBrightnessInfluencedEnabled(bool const &value) {brightnessInfluencedEnabled = value;}
 	void setOffsetInfluencedEnabled(bool const &value) {offsetInfluencedEnabled = value;}
 	void setPatternInfluencedEnabled(bool const &value) {patternInfluencedEnabled = value;}
