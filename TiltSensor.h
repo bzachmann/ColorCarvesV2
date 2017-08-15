@@ -25,6 +25,7 @@ public:
 
 	TiltSensor(axis_t axis = TILT_AXIS_Z) :
 		bno(DEFAULT_BNO055_ID),
+		absoluteMode(false),
 		initialized(false),
 		angle(0.0),
 		axis(axis),
@@ -36,6 +37,7 @@ public:
 	uint16_t getAngleUnified();
 	float getAngleLimit();
 	void setAngleLimit(float limit);
+	void setAbsoluteMode(bool value);
 
 private:
 	void setAngle(float degrees);
@@ -46,6 +48,7 @@ private:
 	Adafruit_BNO055 bno;
 
 	bool initialized;
+	bool absoluteMode;
 	float angle;
 	uint8_t axis;
 	float angleLimit;

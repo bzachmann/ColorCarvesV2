@@ -29,6 +29,8 @@ void ApMain::init()
 	//speedSensor.setMaxSpeed(4.0);
 	//speedSensor.setMinSpeed(0.0);
 
+	tiltSensor.setAbsoluteMode(true);
+
 	ledStrip.setOffsetInfluencedEnabled(true);
 	//ledStrip.setBrightnessInfluencedEnabled(true);
 	//ledStrip.setPatternInfluencedEnabled(true);

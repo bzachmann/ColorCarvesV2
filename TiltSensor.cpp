@@ -46,12 +46,30 @@ void TiltSensor::run()
 
 float TiltSensor::getAngle()
 {
-	return angle;
+	float retVal = 0.0;
+	if(absoluteMode && (angle < 0.0f))
+	{
+		retVal = angle * -1.0f;
+	}
+	else
+	{
+		retVal = angle;
+	}
+	return retVal;
 }
 
 uint16_t TiltSensor::getAngleUnified()
 {
-	return convertUnified(angle, (angleLimit * -1), angleLimit, UNIFIED_VALUE_LOW, UNIFIED_VALUE_HIGH);
+	uint16_t retVal = 0;
+	if(absoluteMode)
+	{
+		retVal = convertUnified(getAngle(), 0.0f, angleLimit, UNIFIED_VALUE_LOW, UNIFIED_VALUE_HIGH);
+	}
+	else
+	{
+		retVal = convertUnified(angle, (angleLimit * -1), angleLimit, UNIFIED_VALUE_LOW, UNIFIED_VALUE_HIGH);
+	}
+	return retVal;
 }
 
 float TiltSensor::getAngleLimit()
@@ -65,6 +83,11 @@ void TiltSensor::setAngleLimit(float limit)
 	{
 		angleLimit = limit;
 	}
+}
+
+void TiltSensor::setAbsoluteMode(bool value)
+{
+	absoluteMode = value;
 }
 
 void TiltSensor::setAngle(float degrees)
