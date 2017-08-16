@@ -13,6 +13,7 @@
 #include "cmprxspeedset.h"
 #include "cmprxspecset.h"
 #include "cmprxbaseset.h"
+#include "cmprxinfluset.h"
 
 class ApCMP {
 public:
@@ -28,6 +29,7 @@ public:
 	CMPRxSPEEDSET speedsetMsgRx;
 	CMPRxSPECSET specsetMsgRx;
 	CMPRxBASESET basesetMsgRx;
+	CMPRxINFLUSET influsetMsgRx;
 };
 
 #endif /* APCMP_H_ */

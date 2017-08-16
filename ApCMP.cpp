@@ -15,7 +15,8 @@ ApCMP::ApCMP() :
 		angsetMsgRx(),
 		speedsetMsgRx(),
 		specsetMsgRx(),
-		basesetMsgRx()
+		basesetMsgRx(),
+		influsetMsgRx()
 {
 
 }
@@ -27,6 +28,7 @@ void ApCMP::init()
 	speedsetMsgRx.init();
 	specsetMsgRx.init();
 	basesetMsgRx.init();
+	influsetMsgRx.init();
 }
 
 void ApCMP::run()
