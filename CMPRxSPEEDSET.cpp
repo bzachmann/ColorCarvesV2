@@ -26,6 +26,13 @@ void CMPRxSPEEDSET::callback(CMPData * data)
 	{
 		ApMain::inst.speedSensor.setMinSpeed(((float)tempByte * SCALE_CMP_SPEED));
 	}
+
+	tempByte = (data->getByte(1) & MASK_CMP_SPEED);
+	if(tempByte != SPEED_DC)
+	{
+		ApMain::inst.speedSensor.setMaxSpeed(((float)tempByte * SCALE_CMP_SPEED));
+	}
+
 }
 
 void CMPRxSPEEDSET::init()
