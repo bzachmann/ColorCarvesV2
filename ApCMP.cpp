@@ -13,7 +13,8 @@ ApCMP ApCMP::inst;
 ApCMP::ApCMP() :
 		ledsetMsgRx(),
 		angsetMsgRx(),
-		speedsetMsgRx()
+		speedsetMsgRx(),
+		specsetMsgRx()
 {
 
 }
@@ -23,6 +24,7 @@ void ApCMP::init()
 	ledsetMsgRx.init();
 	angsetMsgRx.init();
 	speedsetMsgRx.init();
+	specsetMsgRx.init();
 }
 
 void ApCMP::run()
