@@ -8,6 +8,7 @@
 #include "CMPRxSPECSET.h"
 #include "apmain.h"
 #include "apservice.h"
+#include "apeeprom.h"
 
 #define MASK_WHEEL_DIAMETER		(0x7F)
 #define SCALE_CMP_LED_SPACING	(0.1f)
@@ -31,7 +32,9 @@ void CMPRxSPECSET::callback(CMPData * data)
 	uint8_t tempByte = (data->getByte(2) & MASK_WHEEL_DIAMETER);
 	if(tempByte != WHEEL_DIAMETER_DC)
 	{
-		ApMain::inst.speedSensor.setWheelDiameter(tempByte);
+		ApMain::inst.speedSensor.settings.setWheelDiameter(tempByte);
+		ApEEPROM::inst.mem.speedSensorSettings.setWheelDiameter(tempByte);
+		ApEEPROM::inst.writeRequired();
 	}
 }
 

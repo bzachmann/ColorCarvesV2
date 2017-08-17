@@ -16,19 +16,38 @@
 
 class SpeedSensor {
 public:
+	class Settings
+	{
+	public:
+		Settings() :
+			minSpeed(DEFAULT_CT_MIN_SPEED),
+			maxSpeed(DEFAULT_CT_MAX_SPEED),
+			wheelDiameter(DEFAULT_CT_WHEEL_DIAMETER) {}
+
+		float getMinSpeed() const;
+		float getMaxSpeed() const;
+		uint8_t getWheelDiameter() const;
+		void setMinSpeed(float mpers);
+		void setMaxSpeed(float mpers);
+		void setWheelDiameter(uint8_t mm);
+
+	private:
+		float minSpeed;
+		float maxSpeed;
+		uint8_t wheelDiameter;
+	};
+
 	SpeedSensor() :
-		speed(0),
-		maxSpeed(DEFAULT_CT_MAX_SPEED),
-		minSpeed(DEFAULT_CT_MIN_SPEED),
-		wheelDiameter(DEFAULT_CT_WHEEL_DIAMETER) {}
+		settings(),
+		speed(0.0f) {}
 
 	void init();
 	void run();
 	float getSpeed();
 	uint16_t getSpeedUnified();
-	void setMaxSpeed(float mpers);
-	void setMinSpeed(float mpers);
-	void setWheelDiameter(uint8_t mm);
+
+public:
+	Settings settings;
 
 private:
 	float calcSpeed(uint32_t const &usBetweenRotations);
@@ -38,9 +57,6 @@ private:
 
 private:
 	float speed;
-	float maxSpeed;
-	float minSpeed;
-	uint8_t wheelDiameter;
 
 };
 

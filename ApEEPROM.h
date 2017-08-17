@@ -10,12 +10,15 @@
 
 #include "Timer.h"
 #include "tiltsensor.h"
+#include "speedsensor.h"
 
 class ApEEPROM {
 private:
 	typedef struct MemContainer
 	{
 		TiltSensor::Settings tiltSensorSettings;
+		SpeedSensor::Settings speedSensorSettings;
+
 
 	} MemContainer;
 

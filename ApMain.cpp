@@ -31,7 +31,7 @@ void ApMain::init()
 
 	//tiltSensor.setAbsoluteMode(true);
 
-	ledStrip.setOffsetInfluencedEnabled(true);
+	//ledStrip.setOffsetInfluencedEnabled(true);
 	//ledStrip.setBrightnessInfluencedEnabled(true);
 	//ledStrip.setPatternInfluencedEnabled(true);
 
