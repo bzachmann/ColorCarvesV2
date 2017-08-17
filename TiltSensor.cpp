@@ -11,6 +11,29 @@
 #define max(a,b) (((a)>(b))?(a):(b))
 #define min(a,b) (((a)<(b))?(a):(b))
 
+bool TiltSensor::Settings::getAbsoluteMode()
+{
+	return absoluteMode;
+}
+
+float TiltSensor::Settings::getAngleLimit()
+{
+	return angleLimit;
+}
+
+void TiltSensor::Settings::setAbsoluteMode(bool value)
+{
+	absoluteMode = value;
+}
+
+void TiltSensor::Settings::setAngleLimit(float limit)
+{
+	if((limit > 0.0f) && (limit <= MAX_EULER_ANGLE))
+	{
+		angleLimit = limit;
+	}
+}
+
 bool TiltSensor::init()
 {
 	initialized = bno.begin(Adafruit_BNO055::OPERATION_MODE_NDOF);
@@ -47,7 +70,7 @@ void TiltSensor::run()
 float TiltSensor::getAngle()
 {
 	float retVal = 0.0;
-	if(absoluteMode && (angle < 0.0f))
+	if(settings.getAbsoluteMode() && (angle < 0.0f))
 	{
 		retVal = angle * -1.0f;
 	}
@@ -61,39 +84,21 @@ float TiltSensor::getAngle()
 uint16_t TiltSensor::getAngleUnified()
 {
 	uint16_t retVal = 0;
-	if(absoluteMode)
+	if(settings.getAbsoluteMode())
 	{
-		retVal = convertUnified(getAngle(), 0.0f, angleLimit, UNIFIED_VALUE_LOW, UNIFIED_VALUE_HIGH);
+		retVal = convertUnified(getAngle(), 0.0f, settings.getAngleLimit(), UNIFIED_VALUE_LOW, UNIFIED_VALUE_HIGH);
 	}
 	else
 	{
-		retVal = convertUnified(angle, (angleLimit * -1), angleLimit, UNIFIED_VALUE_LOW, UNIFIED_VALUE_HIGH);
+		retVal = convertUnified(angle, (settings.getAngleLimit() * -1), settings.getAngleLimit(), UNIFIED_VALUE_LOW, UNIFIED_VALUE_HIGH);
 	}
 	return retVal;
 }
 
-float TiltSensor::getAngleLimit()
-{
-	return angleLimit;
-}
-
-void TiltSensor::setAngleLimit(float limit)
-{
-	if((limit > 0.0f) && (limit <= MAX_EULER_ANGLE))
-	{
-		angleLimit = limit;
-	}
-}
-
-void TiltSensor::setAbsoluteMode(bool value)
-{
-	absoluteMode = value;
-}
-
 void TiltSensor::setAngle(float degrees)
 {
-	angle = min(degrees, angleLimit);
-	angle = max(angle, (angleLimit * -1));
+	angle = min(degrees, settings.getAngleLimit());
+	angle = max(angle, (settings.getAngleLimit() * -1));
 }
 
 uint16_t TiltSensor::convertUnified(

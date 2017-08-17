@@ -4,6 +4,7 @@
 #include "apservice.h"
 #include "apcmp.h"
 #include "apmain.h"
+#include "apeeprom.h"
 #include "bsp_timercapt.h"
 
 #define CLOCK_MHZ				(16)
@@ -16,6 +17,7 @@ void setup()
 	ApService::inst.init();
 	ApCMP::inst.init();
 	ApMain::inst.init();
+	ApEEPROM::inst.init();
 	//Serial.println("init finished");
 }
 
@@ -24,5 +26,6 @@ void loop()
 	ApService::inst.run();
 	ApCMP::inst.run();
 	ApMain::inst.run();
+	ApEEPROM::inst.run();
 	//delay(1000);
 }
