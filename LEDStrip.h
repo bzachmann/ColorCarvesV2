@@ -26,17 +26,98 @@
 template <uint8_t numLeds, uint8_t pin> class LEDStrip
 {
 public:
+	class Settings
+	{
+	public:
+		Settings() :
+			ledSettings(),
+			brightnessInfluencedEnabled(false),
+			offsetInfluencedEnabled(true),
+			patternInfluencedEnabled(false),
+			unInfluencedBrightness(DEFAULT_CT_BRIGHTNESS),
+			unInfluencedBaseOffset(DEFAULT_CT_BASE_OFFSET) {}
+
+		uint8_t getNumLeds() { return numLeds;}
+		bool getBrightnessInfluencedEnabled() {return brightnessInfluencedEnabled;}
+		bool getOffsetInfluencedEnabled() {return offsetInfluencedEnabled;}
+		bool getPatternInfluencedEnabled() {return patternInfluencedEnabled;}
+
+		uint8_t getUnInfluencedBrightness() {return unInfluencedBrightness;}
+		uint16_t getUnInfluencedBaseOffset() {return unInfluencedBaseOffset;}
+		bool getLEDState(uint8_t index)
+		{
+			bool retVal = false;
+			if(index < numLeds)
+			{
+				retVal = ledSettings[index].getState();
+			}
+			return retVal;
+		}
+
+		uint16_t getLEDOffset(uint8_t index)
+		{
+			uint16_t retVal = 0;
+			if(index < numLeds)
+			{
+				retVal = ledSettings[index].getOffset();
+			}
+			return retVal;
+		}
+		LEDSetting getLEDSetting(uint8_t index)
+		{
+			LEDSetting retVal;
+			if(index < numLeds)
+			{
+				retVal = ledSettings[index];
+				//memcpy(&retVal, &ledSettings[index], sizeof(LEDSetting));
+			}
+			return retVal;
+		}
+
+
+		void setBrightnessInfluencedEnabled(bool const &value) {brightnessInfluencedEnabled = value;}
+		void setOffsetInfluencedEnabled(bool const &value) {offsetInfluencedEnabled = value;}
+		void setPatternInfluencedEnabled(bool const &value) {patternInfluencedEnabled = value;}
+		void setUnInfluencedBrightness(uint8_t const &brightness) {unInfluencedBrightness = brightness;}
+		void setUnInfluencedBrightnessUnified(uint16_t const &brightness)
+				{unInfluencedBrightness = LEDStrip::convertUnified(brightness, UNIFIED_VALUE_MIN, UNIFIED_VALUE_MAX, UINT8_MIN, UINT8_MAX);}
+		void setUnInfluencedBaseOffset(uint16_t const &offset) {unInfluencedBaseOffset = min(offset, UNIFIED_VALUE_MAX);}
+		void setLEDState(uint8_t const &index, bool const &state)
+		{
+			if(index < numLeds)
+			{
+				ledSettings[index].setState(state);
+			}
+		}
+
+		void setLEDOffset(uint8_t const &index, uint16_t const &offset)
+		{
+			if(index < numLeds)
+			{
+				ledSettings[index].setOffset(offset);
+			}
+		}
+
+	private:
+		LEDSetting ledSettings[numLeds];
+
+		bool brightnessInfluencedEnabled;
+		bool offsetInfluencedEnabled;
+		bool patternInfluencedEnabled;
+
+		uint8_t unInfluencedBrightness;
+		uint16_t unInfluencedBaseOffset;
+
+	};
+
+
 	LEDStrip<numLeds, pin>() :
-		leds(numLeds, pin),
-		ledSettings(),
-		brightnessInfluencedEnabled(false),
-		offsetInfluencedEnabled(false),
-		patternInfluencedEnabled(false),
+		settings(),
 		influencedBrightness(DEFAULT_CT_BRIGHTNESS),
 		influencedBaseOffset(DEFAULT_CT_BASE_OFFSET),
-		unInfluencedBrightness(DEFAULT_CT_BRIGHTNESS),
-		unInfluencedBaseOffset(DEFAULT_CT_BASE_OFFSET),
+		leds(numLeds, pin),
 		onIndex(DEFAULT_CT_ON_INDEX){}
+
 
 	void init()
 	{
@@ -50,41 +131,25 @@ public:
 		leds.show();
 	}
 
-	uint8_t getNumLeds() { return numLeds;}
-	void setBrightnessInfluencedEnabled(bool const &value) {brightnessInfluencedEnabled = value;}
-	void setOffsetInfluencedEnabled(bool const &value) {offsetInfluencedEnabled = value;}
-	void setPatternInfluencedEnabled(bool const &value) {patternInfluencedEnabled = value;}
+
+	uint8_t getInfluencedBrightness() {return influencedBrightness;}
+	uint16_t getInfluencedBaseOffset() {return influencedBaseOffset;}
+
 	void setInfluencedBrightness(uint8_t const &brightness) {influencedBrightness = brightness;}
 	void setInfluencedBrightnessUnified(uint16_t const &brightness)
 		{influencedBrightness = convertUnified(brightness, UNIFIED_VALUE_MIN, UNIFIED_VALUE_MAX, UINT8_MIN, UINT8_MAX);}
 	void setInfluencedBaseOffset(uint16_t const &offset) {influencedBaseOffset = min(offset, UNIFIED_VALUE_MAX);}
-	void setUnInfluencedBrightness(uint8_t const &brightness) {unInfluencedBrightness = brightness;}
-	void setUnInfluencedBrightnessUnified(uint16_t const &brightness)
-			{unInfluencedBrightness = convertUnified(brightness, UNIFIED_VALUE_MIN, UNIFIED_VALUE_MAX, UINT8_MIN, UINT8_MAX);}
-	void setUnInfluencedBaseOffset(uint16_t const &offset) {unInfluencedBaseOffset = min(offset, UNIFIED_VALUE_MAX);}
 	void setOnIndex(uint8_t const &led) {onIndex = min(led, numLeds - 1);}
 	void setOnIndexUnified(uint16_t const &led)
 			{onIndex = convertUnified(led, UNIFIED_VALUE_MIN, UNIFIED_VALUE_MAX, 0, (numLeds - 1));}
 
-	void setLEDState(uint8_t const &index, bool const &state)
-	{
-		if(index < numLeds)
-		{
-			ledSettings[index].setState(state);
-		}
-	}
 
-	void setLEDOffset(uint8_t const &index, uint16_t const &offset)
-	{
-		if(index < numLeds)
-		{
-			ledSettings[index].setOffset(offset);
-		}
-	}
 
+public:
+	Settings settings;
 
 private:
-	uint8_t convertUnified(uint16_t const &x, uint16_t const &inMin, uint16_t const &inMax, uint8_t const &outMin, uint8_t const &outMax)
+	static uint8_t convertUnified(uint16_t const &x, uint16_t const &inMin, uint16_t const &inMax, uint8_t const &outMin, uint8_t const &outMax)
 	{
 		uint8_t retVal = (uint8_t)(( (((float)(x - inMin)) / (inMax - inMin)) * ((float)(outMax - outMin))) + outMin);
 		retVal = min(retVal, inMax);
@@ -94,16 +159,16 @@ private:
 
 	void updateBrightness()
 	{
-		uint8_t activeBrightness = (brightnessInfluencedEnabled ? influencedBrightness : unInfluencedBrightness);
+		uint8_t activeBrightness = (settings.getBrightnessInfluencedEnabled() ? getInfluencedBrightness() : settings.getUnInfluencedBrightness());
 		leds.setBrightness(activeBrightness);
 	}
 
 	void updateColors()
 	{
-		uint16_t activeBaseOffset = (offsetInfluencedEnabled ? influencedBaseOffset : unInfluencedBaseOffset);
+		uint16_t activeBaseOffset = (settings.getOffsetInfluencedEnabled() ? getInfluencedBaseOffset() : settings.getUnInfluencedBaseOffset());
 
 		uint8_t r,g,b = 0;
-		if(patternInfluencedEnabled)
+		if(settings.getPatternInfluencedEnabled())
 		{
 			for(uint8_t i = 0; i < numLeds; i++)
 			{
@@ -112,7 +177,8 @@ private:
 
 			if(onIndex < numLeds)
 			{
-				ledSettings[onIndex].getRGB(activeBaseOffset, r, g, b);
+#warning todo - not very efficient
+				settings.getLEDSetting(onIndex).getRGB(activeBaseOffset, r, g, b);
 				leds.setPixelColor(onIndex, r, g, b);
 			}
 		}
@@ -120,7 +186,8 @@ private:
 		{
 			for(uint8_t i = 0; i < numLeds; i++)
 			{
-				ledSettings[i].getRGB(activeBaseOffset, r, g, b);
+#warning todo - not very efficient
+				settings.getLEDSetting(i).getRGB(activeBaseOffset, r, g, b);
 				leds.setPixelColor(i, r, g, b);
 			}
 		}
@@ -128,18 +195,12 @@ private:
 
 private:
 	Adafruit_NeoPixel leds;
-	LEDSetting ledSettings[numLeds];
-
-	bool brightnessInfluencedEnabled;
-	bool offsetInfluencedEnabled;
-	bool patternInfluencedEnabled;
 
 	uint8_t influencedBrightness;
 	uint16_t influencedBaseOffset;
-	uint8_t unInfluencedBrightness;
-	uint16_t unInfluencedBaseOffset;
 
 	uint8_t onIndex;
+
 };
 
 #endif /* LEDSTRIP_H_ */

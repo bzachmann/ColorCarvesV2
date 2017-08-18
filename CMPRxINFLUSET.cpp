@@ -8,6 +8,7 @@
 #include "CMPRxINFLUSET.h"
 #include "apservice.h"
 #include "apmain.h"
+#include "apeeprom.h"
 
 #define ENABLE_DC					(0x03)
 #define MASK_ENABLE					(0x03)
@@ -26,31 +27,43 @@ void CMPRxINFLUSET::callback(CMPData * data)
 	uint8_t tempByte = (data->getByte(0) >> SHIFT_OFFSET_ENABLE) & MASK_ENABLE;
 	if(tempByte == 0)
 	{
-		ApMain::inst.ledStrip.setOffsetInfluencedEnabled(false);
+		ApMain::inst.ledStrip.settings.setOffsetInfluencedEnabled(false);
+		ApEEPROM::inst.mem.ledStripSettings.setOffsetInfluencedEnabled(false);
+		ApEEPROM::inst.writeRequired();
 	}
 	else if(tempByte == 1)
 	{
-		ApMain::inst.ledStrip.setOffsetInfluencedEnabled(true);
+		ApMain::inst.ledStrip.settings.setOffsetInfluencedEnabled(true);
+		ApEEPROM::inst.mem.ledStripSettings.setOffsetInfluencedEnabled(true);
+		ApEEPROM::inst.writeRequired();
 	}
 
 	tempByte = (data->getByte(0) >> SHIFT_BRIGHTNESS_ENABLE) & MASK_ENABLE;
 	if(tempByte == 0)
 	{
-		ApMain::inst.ledStrip.setBrightnessInfluencedEnabled(false);
+		ApMain::inst.ledStrip.settings.setBrightnessInfluencedEnabled(false);
+		ApEEPROM::inst.mem.ledStripSettings.setBrightnessInfluencedEnabled(false);
+		ApEEPROM::inst.writeRequired();
 	}
 	else if(tempByte == 1)
 	{
-		ApMain::inst.ledStrip.setBrightnessInfluencedEnabled(true);
+		ApMain::inst.ledStrip.settings.setBrightnessInfluencedEnabled(true);
+		ApEEPROM::inst.mem.ledStripSettings.setBrightnessInfluencedEnabled(true);
+		ApEEPROM::inst.writeRequired();
 	}
 
 	tempByte = (data->getByte(0) >> SHIFT_PATTERN_ENABLE) & MASK_ENABLE;
 	if(tempByte == 0)
 	{
-		ApMain::inst.ledStrip.setPatternInfluencedEnabled(false);
+		ApMain::inst.ledStrip.settings.setPatternInfluencedEnabled(false);
+		ApEEPROM::inst.mem.ledStripSettings.setPatternInfluencedEnabled(false);
+		ApEEPROM::inst.writeRequired();
 	}
 	else if(tempByte == 1)
 	{
-		ApMain::inst.ledStrip.setPatternInfluencedEnabled(true);
+		ApMain::inst.ledStrip.settings.setPatternInfluencedEnabled(true);
+		ApEEPROM::inst.mem.ledStripSettings.setPatternInfluencedEnabled(true);
+		ApEEPROM::inst.writeRequired();
 	}
 }
 

@@ -12,6 +12,8 @@
 #include "tiltsensor.h"
 #include "speedsensor.h"
 #include "ledtracker.h"
+#include "ledstrip.h"
+#include "apmain.h"
 
 class ApEEPROM {
 private:
@@ -20,6 +22,7 @@ private:
 		TiltSensor::Settings tiltSensorSettings;
 		SpeedSensor::Settings speedSensorSettings;
 		LEDTracker::Settings ledTrackerSettings;
+		LEDStrip<NUM_LEDS, PIN_LED_STRIP>::Settings ledStripSettings;
 
 
 	} MemContainer;

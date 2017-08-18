@@ -8,6 +8,7 @@
 #include "cmprxledset.h"
 #include "apservice.h"
 #include "apmain.h"
+#include "apeeprom.h"
 
 #define LED_STATE_DC		(0x03)
 #define LED_OFFSET_DC		(0x03FF)
@@ -31,7 +32,7 @@ void CMPRxLEDSET::callback(CMPData * data)
 	}
 	else
 	{
-		setLED(ledIndex, ledState, ledIndex);
+		setLED(ledIndex, ledState, ledOffset);
 	}
 }
 void CMPRxLEDSET::init()
@@ -46,23 +47,29 @@ void CMPRxLEDSET::setLED(uint8_t const &ledIndex, uint8_t const &state, uint16_t
 	{
 		if(state == 0)
 		{
-			ApMain::inst.ledStrip.setLEDState(ledIndex, false);
+			ApMain::inst.ledStrip.settings.setLEDState(ledIndex, false);
+			ApEEPROM::inst.mem.ledStripSettings.setLEDState(ledIndex, false);
+			ApEEPROM::inst.writeRequired();
 		}
 		else if(state == 1)
 		{
-			ApMain::inst.ledStrip.setLEDState(ledIndex, true);
+			ApMain::inst.ledStrip.settings.setLEDState(ledIndex, true);
+			ApEEPROM::inst.mem.ledStripSettings.setLEDState(ledIndex, true);
+			ApEEPROM::inst.writeRequired();
 		}
 	}
 
 	if(offset != LED_OFFSET_DC)
 	{
-		ApMain::inst.ledStrip.setLEDOffset(ledIndex, offset);
+		ApMain::inst.ledStrip.settings.setLEDOffset(ledIndex, offset);
+		ApEEPROM::inst.mem.ledStripSettings.setLEDOffset(ledIndex, offset);
+		ApEEPROM::inst.writeRequired();
 	}
 }
 
 void CMPRxLEDSET::setAllLEDs(uint8_t const &state, uint16_t const &offset)
 {
-	uint8_t limit = ApMain::inst.ledStrip.getNumLeds();
+	uint8_t limit = ApMain::inst.ledStrip.settings.getNumLeds();
 	for(uint8_t i = 0; i < limit; i++)
 	{
 		setLED(i, state, offset);
