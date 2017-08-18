@@ -15,9 +15,22 @@
 
 class LEDTracker {
 public:
+	class Settings
+	{
+	public:
+		Settings() :
+			ledSpacing(DEFAULT_CT_LED_SPACING) {}
+
+		float getLEDSpacing();
+		void setLEDSpacing(float mm);
+
+	private:
+		float ledSpacing;
+	};
+
 	LEDTracker(uint8_t numLEDs) :
+		settings(),
 		numLeds(numLEDs),
-		ledSpacing(DEFAULT_CT_LED_SPACING),
 		speed(0.0f),
 		elapsedLedRemainder(0.0f),
 		ledIndex(0),
@@ -26,15 +39,16 @@ public:
 	void init();
 	void run();
 	void setSpeed(float mpers);
-	void setLEDSpacing(float mm);
 	uint8_t getLEDIndex();
+
+public:
+	Settings settings;
 
 private:
    uint16_t getElapsedLEDs();
 
 private:
    	uint8_t numLeds;
-   	float ledSpacing;
 
 	float speed;
 	float elapsedLedRemainder;

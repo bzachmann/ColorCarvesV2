@@ -13,7 +13,7 @@
 #include "ledtracker.h"
 #include "ledstrip.h"
 
-#define	NUM_LEDS			(33)
+#define	NUM_LEDS			(11)
 #define	PIN_LED_STRIP		(6)
 
 class ApMain {

@@ -94,12 +94,14 @@ void ApEEPROM::restore()
 {
 	memcpy(&ApMain::inst.tiltSensor.settings, &mem.tiltSensorSettings, sizeof(TiltSensor::Settings));
 	memcpy(&ApMain::inst.speedSensor.settings, &mem.speedSensorSettings, sizeof(SpeedSensor::Settings));
+	memcpy(&ApMain::inst.ledTracker.settings, &mem.ledTrackerSettings, sizeof(LEDTracker::Settings));
 }
 
 void ApEEPROM::reverseRestore()
 {
 	memcpy(&mem.tiltSensorSettings, &ApMain::inst.tiltSensor.settings, sizeof(TiltSensor::Settings));
 	memcpy(&mem.speedSensorSettings, &ApMain::inst.speedSensor.settings, sizeof(SpeedSensor::Settings));
+	memcpy(&mem.ledTrackerSettings, &ApMain::inst.ledTracker.settings, sizeof(LEDTracker::Settings));
 }
 
 bool ApEEPROM::checkChecksum()

@@ -7,6 +7,19 @@
 
 #include "LEDTracker.h"
 
+float LEDTracker::Settings::getLEDSpacing()
+{
+	return ledSpacing;
+}
+
+void LEDTracker::Settings::setLEDSpacing(float mm)
+{
+	if(mm > 0.0f)
+	{
+		ledSpacing = mm;
+	}
+}
+
 void LEDTracker::init()
 {
 	timer.start();
@@ -29,14 +42,6 @@ void LEDTracker::setSpeed(float mpers)
 	}
 }
 
-void LEDTracker::setLEDSpacing(float mm)
-{
-	if(mm > 0.0f)
-	{
-		ledSpacing = mm;
-	}
-}
-
 uint8_t LEDTracker::getLEDIndex()
 {
 	return ledIndex;
@@ -45,10 +50,10 @@ uint8_t LEDTracker::getLEDIndex()
 uint16_t LEDTracker::getElapsedLEDs()
 {
 	uint16_t retVal = 0;
-	if(ledSpacing != 0)
+	if(settings.getLEDSpacing() != 0)
 	{
 		uint32_t elapsedUs = timer.getTimeUs();
-		elapsedLedRemainder += (speed * elapsedUs)/(ledSpacing * 1000);
+		elapsedLedRemainder += (speed * elapsedUs)/(settings.getLEDSpacing() * 1000);
 		retVal = (uint16_t)elapsedLedRemainder;
 		elapsedLedRemainder -= retVal;
 	}

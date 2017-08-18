@@ -11,6 +11,7 @@
 #include "Timer.h"
 #include "tiltsensor.h"
 #include "speedsensor.h"
+#include "ledtracker.h"
 
 class ApEEPROM {
 private:
@@ -18,6 +19,7 @@ private:
 	{
 		TiltSensor::Settings tiltSensorSettings;
 		SpeedSensor::Settings speedSensorSettings;
+		LEDTracker::Settings ledTrackerSettings;
 
 
 	} MemContainer;

@@ -26,7 +26,9 @@ void CMPRxSPECSET::callback(CMPData * data)
 	uint16_t tempWord = (((uint16_t)(data->getByte(1) & 0x03)) << 8) | (data->getByte(0) & 0xFF);
 	if(tempWord != LED_SPACING_DC)
 	{
-		ApMain::inst.ledTracker.setLEDSpacing(((float)tempWord * SCALE_CMP_LED_SPACING));
+		ApMain::inst.ledTracker.settings.setLEDSpacing(((float)tempWord * SCALE_CMP_LED_SPACING));
+		ApEEPROM::inst.mem.ledTrackerSettings.setLEDSpacing(((float)tempWord * SCALE_CMP_LED_SPACING));
+		ApEEPROM::inst.writeRequired();
 	}
 
 	uint8_t tempByte = (data->getByte(2) & MASK_WHEEL_DIAMETER);
