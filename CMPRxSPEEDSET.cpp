@@ -43,6 +43,6 @@ void CMPRxSPEEDSET::callback(CMPData * data)
 void CMPRxSPEEDSET::init()
 {
 	id.setID(SPEEDSET_ID);
-	ApService::inst.payloadHandler.registerDataHandler(this);
+	ApService::inst.payloadHandlerRx.registerDataHandler(this);
 }
 

@@ -43,6 +43,6 @@ void CMPRxSPECSET::callback(CMPData * data)
 void CMPRxSPECSET::init()
 {
 	id.setID(SPECSET_ID);
-	ApService::inst.payloadHandler.registerDataHandler(this);
+	ApService::inst.payloadHandlerRx.registerDataHandler(this);
 
 }

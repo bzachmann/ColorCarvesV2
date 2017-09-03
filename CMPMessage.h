@@ -13,6 +13,7 @@
 #define CMP_ID_SIZE				(1)
 #define CMP_DATA_SIZE			(3)
 #define CMP_PAYLOAD_SIZE		(CMP_DATA_SIZE + CMP_ID_SIZE)
+#define CMP_MESSAGE_SIZE		(CMP_PAYLOAD_SIZE + 1)
 
 class CMPID {
 public:

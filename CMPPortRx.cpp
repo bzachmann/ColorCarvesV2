@@ -3,7 +3,7 @@
 CMPPortRx::CMPPortRx() :
 		stream(0),
 		byteBuffer({0}),
-		messageFifo(),
+		payloadFifo(),
 		headerRcvd(false),
 		byteBufferIndex(0)
 {
@@ -13,7 +13,7 @@ CMPPortRx::CMPPortRx() :
 void CMPPortRx::init(Stream const * stream)
 {
 	this->stream = stream;
-	messageFifo.flush();
+	payloadFifo.flush();
 	byteBufferIndex = 0;
 	headerRcvd = false;
 }
@@ -22,7 +22,7 @@ void CMPPortRx::run()
 {
 	if(stream != 0)
 	{
-		while(stream->available() && messageFifo.notFull())
+		while(stream->available() && payloadFifo.notFull())
 		{
 			uint8_t tempByte = stream->read();
 
@@ -44,13 +44,13 @@ void CMPPortRx::run()
 
 bool CMPPortRx::available()
 {
-	return messageFifo.notEmpty();
+	return payloadFifo.notEmpty();
 }
 
 CMPPayload CMPPortRx::read()
 {
 	CMPPayload tempPayload;
-	messageFifo.get(tempPayload);
+	payloadFifo.get(tempPayload);
 	return tempPayload;
 }
 
@@ -75,7 +75,7 @@ void CMPPortRx::parseAndQueue()
 	tempPayload.data.setByte(1, byteBuffer[2]);
 	tempPayload.data.setByte(0, byteBuffer[3]);
 
-	messageFifo.put(tempPayload);
+	payloadFifo.put(tempPayload);
 	resetBuffer();
 }
 

@@ -53,5 +53,5 @@ void CMPRxANGSET::callback(CMPData * data)
 void CMPRxANGSET::init()
 {
 	id.setID(ANGSET_ID);
-	ApService::inst.payloadHandler.registerDataHandler(this);
+	ApService::inst.payloadHandlerRx.registerDataHandler(this);
 }

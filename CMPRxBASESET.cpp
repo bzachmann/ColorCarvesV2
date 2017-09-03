@@ -40,5 +40,5 @@ void CMPRxBASESET::callback(CMPData * data)
 void CMPRxBASESET::init()
 {
 	id.setID(BASESET_ID);
-	ApService::inst.payloadHandler.registerDataHandler(this);
+	ApService::inst.payloadHandlerRx.registerDataHandler(this);
 }

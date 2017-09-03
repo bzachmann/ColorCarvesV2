@@ -8,18 +8,16 @@
 //#include <Arduino.h>
 #include "CMPPort.h"
 
-CMPPort::CMPPort()
-{
-
-}
 
 void CMPPort::init(Stream const * stream)
 {
+	tx.init(stream);
 	rx.init(stream);
 }
 
 void CMPPort::run()
 {
+	tx.run();
 	rx.run();
 }
 

@@ -38,7 +38,7 @@ void CMPRxLEDSET::callback(CMPData * data)
 void CMPRxLEDSET::init()
 {
 	id.setID(LEDSET_ID);
-	ApService::inst.payloadHandler.registerDataHandler(this);
+	ApService::inst.payloadHandlerRx.registerDataHandler(this);
 }
 
 void CMPRxLEDSET::setLED(uint8_t const &ledIndex, uint8_t const &state, uint16_t const &offset)

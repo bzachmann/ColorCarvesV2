@@ -25,7 +25,7 @@ public:
 	static ApService inst;
 
 	CMPPort cmpPort;
-	CMPPayloadHandlerRx payloadHandler;
+	CMPPayloadHandlerRx payloadHandlerRx;
 };
 
 #endif /* APSERVICE_H_ */

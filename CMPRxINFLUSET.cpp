@@ -70,6 +70,6 @@ void CMPRxINFLUSET::callback(CMPData * data)
 void CMPRxINFLUSET::init()
 {
 	id.setID(INFLUSET_ID);
-	ApService::inst.payloadHandler.registerDataHandler(this);
+	ApService::inst.payloadHandlerRx.registerDataHandler(this);
 }
 

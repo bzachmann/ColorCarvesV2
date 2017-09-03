@@ -21,12 +21,12 @@ private:
 	void parseAndQueue();
 	void resetBuffer();
 
-public:
+private:
 	Stream * stream;
 
 	uint8_t byteBuffer[CMP_PAYLOAD_SIZE];
 
-	Fifo<CMPPayload, CMP_PORT_RX_PAYLOAD_FIFO_SIZE> messageFifo;
+	Fifo<CMPPayload, CMP_PORT_RX_PAYLOAD_FIFO_SIZE> payloadFifo;
 
 	bool headerRcvd;
 	uint8_t byteBufferIndex;
