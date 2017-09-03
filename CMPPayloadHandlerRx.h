@@ -15,6 +15,7 @@ public:
 private:
 	void processPayload(CMPPayload * payload);
 
+#warning todo does this need to be public?
 public:
 	CMPPortRx * portRx;
 

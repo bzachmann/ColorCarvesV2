@@ -18,11 +18,13 @@ ApService::ApService()
 void ApService::init()
 {
 	cmpPort.init(&Serial);
+	payloadHandlerTx.init(&(cmpPort.tx));
 	payloadHandlerRx.init(&(cmpPort.rx));
 }
 
 void ApService::run()
 {
 	cmpPort.run();
+	payloadHandlerTx.run();
 	payloadHandlerRx.run();
 }

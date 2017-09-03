@@ -9,6 +9,7 @@
 #define APSERVICE_H_
 
 #include "cmpport.h"
+#include "cmppayloadhandlertx.h"
 #include "cmppayloadhandlerrx.h"
 
 #define UNIFIED_VALUE_LOW		(0)
@@ -25,6 +26,7 @@ public:
 	static ApService inst;
 
 	CMPPort cmpPort;
+	CMPPayloadHandlerTx payloadHandlerTx;
 	CMPPayloadHandlerRx payloadHandlerRx;
 };
 
