@@ -9,9 +9,11 @@
 
 void CMPDataHandlerTx::run()
 {
+	timer.run();
 	if(timer.getTimeMs() > sendRate)
 	{
 		sendFlag = true;
+		timer.reset();
 	}
 }
 

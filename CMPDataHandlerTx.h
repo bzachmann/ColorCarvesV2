@@ -33,6 +33,8 @@ public:
 
 private:
 	bool sendFlag;
+
+protected:
 	uint16_t sendRate;
 
 	Timer timer;
