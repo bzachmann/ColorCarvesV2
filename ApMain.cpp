@@ -6,6 +6,7 @@
  */
 
 #include "ApMain.h"
+#include "apcmp.h"
 
 ApMain ApMain::inst;
 
@@ -42,6 +43,10 @@ void ApMain::run()
 	//run sensors
 	tiltSensor.run();
 	speedSensor.run();
+
+	ApCMP::inst.infoMsgTx.setSpeed(speedSensor.getSpeed());
+	ApCMP::inst.infoMsgTx.setTiltAngle(tiltSensor.getAngle());
+
 	ledTracker.setSpeed(speedSensor.getSpeed());
 	ledTracker.run();
 

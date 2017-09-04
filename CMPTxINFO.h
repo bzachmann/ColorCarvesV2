@@ -18,6 +18,13 @@ public:
 	void callback(CMPData * data) override;
 	void init();
 
+	void setSpeed(float mpers);
+	void setTiltAngle(float degrees);
+
+private:
+	float speed;
+	float tiltAngle;
+
 };
 
 #endif /* CMPTXINFO_H_ */

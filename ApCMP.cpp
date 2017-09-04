@@ -7,6 +7,7 @@
 
 #include "apcmp.h"
 #include "cmpport.h"
+#include "apversion.h"
 
 ApCMP ApCMP::inst;
 
@@ -16,7 +17,9 @@ ApCMP::ApCMP() :
 		speedsetMsgRx(),
 		specsetMsgRx(),
 		basesetMsgRx(),
-		influsetMsgRx()
+		influsetMsgRx(),
+		versionMsgTx(),
+		infoMsgTx()
 {
 
 }
@@ -29,10 +32,12 @@ void ApCMP::init()
 	specsetMsgRx.init();
 	basesetMsgRx.init();
 	influsetMsgRx.init();
+	versionMsgTx.init(versionType, versionMajor, versionMinor);
+	infoMsgTx.init();
 }
 
 void ApCMP::run()
 {
-
+	infoMsgTx.run();
 }
 

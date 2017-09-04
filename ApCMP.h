@@ -14,6 +14,8 @@
 #include "cmprxspecset.h"
 #include "cmprxbaseset.h"
 #include "cmprxinfluset.h"
+#include "cmptxversion.h"
+#include "cmptxinfo.h"
 
 class ApCMP {
 public:
@@ -30,6 +32,9 @@ public:
 	CMPRxSPECSET specsetMsgRx;
 	CMPRxBASESET basesetMsgRx;
 	CMPRxINFLUSET influsetMsgRx;
+
+	CMPTxVERSION versionMsgTx;
+	CMPTxINFO infoMsgTx;
 };
 
 #endif /* APCMP_H_ */
