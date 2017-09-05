@@ -12,9 +12,10 @@
 #define INFO_SEND_RATE	(250)
 
 #define SCALE_ANGLE		(10)
-#define MASK_ANGLE		(0x3F)
+#define OFFSET_ANGLE	(102.3f)
+#define MASK_ANGLE		(0x0FFF)
 #define SCALE_SPEED		(100)
-#define MASK_SPEED		(0x3F)
+#define MASK_SPEED		(0x0FFF)
 
 CMPTxINFO::CMPTxINFO() :
 	CMPDataHandlerTx(),
@@ -26,18 +27,14 @@ CMPTxINFO::CMPTxINFO() :
 
 void CMPTxINFO::callback(CMPData * data)
 {
-	uint16_t tempAngle = tiltAngle * SCALE_ANGLE;
-	tempAngle &= MASK_ANGLE;
-
-	uint16_t tempSpeed = speed * SCALE_SPEED;
-	tempSpeed &= MASK_SPEED;
-	tempSpeed = tempSpeed << 2;
+	uint16_t tempAngle = ((uint16_t)((tiltAngle + OFFSET_ANGLE) * SCALE_ANGLE)) & MASK_ANGLE;
+	uint16_t tempSpeed = ((uint16_t)(speed * SCALE_SPEED)) & MASK_SPEED;
 
 	uint8_t tempByte = tempAngle & 0xFF;
 	data->setByte(0, tempByte);
-	tempByte = ((tempAngle >> 8) & 0x03) || (tempSpeed & 0xFC);
+	tempByte = ((tempAngle >> 8) & 0x0F) | ((tempSpeed & 0x0F) << 4);
 	data->setByte(1, tempByte);
-	tempByte = (tempSpeed >> 8) & 0x1F;
+	tempByte = (tempSpeed >> 4) & 0xFF;
 	data->setByte(2, tempByte);
 }
 

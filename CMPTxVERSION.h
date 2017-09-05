@@ -17,7 +17,7 @@ class CMPTxVERSION: public CMPDataHandlerTx
 public:
 	CMPTxVERSION();
 	void callback(CMPData * data) override;
-	void init(uint8_t const &type, uint8_t const &minor, uint8_t const &major);
+	void init(uint8_t const &type, uint8_t const &major, uint8_t const &minor);
 
 private:
 

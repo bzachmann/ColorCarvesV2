@@ -24,7 +24,7 @@ void CMPTxVERSION::callback(CMPData * data)
 	data->setByte(2, versionType);
 }
 
-void CMPTxVERSION::init(uint8_t const &type, uint8_t const &minor, uint8_t const &major)
+void CMPTxVERSION::init(uint8_t const &type, uint8_t const &major, uint8_t const &minor)
 {
 	versionType = type;
 	versionMajor = major;
