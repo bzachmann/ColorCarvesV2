@@ -10,6 +10,8 @@
 
 #include "CMPDataHandlerTx.h"
 
+#define VERSION_ID				(0x80)
+
 class CMPTxVERSION: public CMPDataHandlerTx
 {
 public:

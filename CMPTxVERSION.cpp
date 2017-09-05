@@ -8,8 +8,6 @@
 #include "CMPTxVERSION.h"
 #include "apservice.h"
 
-#define VERSION_ID				(0x80)
-
 CMPTxVERSION::CMPTxVERSION() :
 	CMPDataHandlerTx(),
 	versionType(0),

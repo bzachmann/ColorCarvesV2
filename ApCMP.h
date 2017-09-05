@@ -14,6 +14,7 @@
 #include "cmprxspecset.h"
 #include "cmprxbaseset.h"
 #include "cmprxinfluset.h"
+#include "cmprxrqst.h"
 #include "cmptxversion.h"
 #include "cmptxinfo.h"
 
@@ -32,6 +33,7 @@ public:
 	CMPRxSPECSET specsetMsgRx;
 	CMPRxBASESET basesetMsgRx;
 	CMPRxINFLUSET influsetMsgRx;
+	CMPRxRQST rqstMsgRx;
 
 	CMPTxVERSION versionMsgTx;
 	CMPTxINFO infoMsgTx;

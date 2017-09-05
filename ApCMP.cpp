@@ -19,7 +19,8 @@ ApCMP::ApCMP() :
 		basesetMsgRx(),
 		influsetMsgRx(),
 		versionMsgTx(),
-		infoMsgTx()
+		infoMsgTx(),
+		rqstMsgRx()
 {
 
 }
@@ -32,6 +33,7 @@ void ApCMP::init()
 	specsetMsgRx.init();
 	basesetMsgRx.init();
 	influsetMsgRx.init();
+	rqstMsgRx.init();
 	versionMsgTx.init(versionType, versionMajor, versionMinor);
 	infoMsgTx.init();
 }
