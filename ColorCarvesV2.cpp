@@ -6,6 +6,7 @@
 #include "apmain.h"
 #include "apeeprom.h"
 #include "bsp_timercapt.h"
+#include "debugserial.h"
 
 #define CLOCK_MHZ				(16)
 #define TIMER_CAPT_PRESCALER	(4)
@@ -13,6 +14,7 @@
 void setup()
 {
 	Serial.begin(9600);
+	debugserial_init();
 	bsp_timercapt_init(CLOCK_MHZ, TIMER_CAPT_PRESCALER);
 	ApService::inst.init();
 	ApCMP::inst.init();

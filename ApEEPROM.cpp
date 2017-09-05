@@ -9,9 +9,7 @@
 #include <eeprom.h>
 
 #include "apmain.h"
-
-#warning todo remove after testing
-#include <Arduino.h>
+#include "debugserial.h"
 
 #define DEBOUNCE_EEPROM_WRITE	(1000)
 #define EEPROM_OFFSET			(0)
@@ -29,19 +27,19 @@ ApEEPROM::ApEEPROM() :
 
 void ApEEPROM::init()
 {
-	Serial.println(F("initializing eeprom"));
+	debugPrint(F("initializing eeprom\n"));
 	timer.reset();
 
-	Serial.println(F("reading"));
+	debugPrint(F("reading\n"));
 	read();
 	if(checkChecksum())
 	{
-		Serial.println(F("checksum good... restoring"));
+		debugPrint(F("checksum good... restoring\n"));
 		restore();
 	}
 	else
 	{
-		Serial.println(F("checksum bad.. reverse restoring"));
+		debugPrint(F("checksum bad.. reverse restoring\n"));
 		reverseRestore();
 		write();
 	}
@@ -69,18 +67,20 @@ void ApEEPROM::writeRequired()
 
 void ApEEPROM::read()
 {
-	Serial.print(F("reading memory at offset: "));
-	Serial.println(EEPROM_OFFSET);
+	debugPrint(F("reading memory at offset: "));
+	debugPrint(EEPROM_OFFSET);
+	debugPrint(F("\n"));
 	EEPROM.get(EEPROM_OFFSET, mem);
 
-	Serial.print(F("reading memory at offset: "));
-	Serial.println(sizeof(MemContainer) + EEPROM_OFFSET);
+	debugPrint(F("reading memory at offset: "));
+	debugPrint(sizeof(MemContainer) + EEPROM_OFFSET);
+	debugPrint(F("\n"));
 	EEPROM.get(sizeof(MemContainer) + EEPROM_OFFSET, checksumReserve);
 }
 
 void ApEEPROM::write()
 {
-	Serial.println(F("writing eeprom!"));
+	debugPrint(F("writing eeprom!\n"));
 
 	writeRequiredFlag = false;
 	timer.stop();
