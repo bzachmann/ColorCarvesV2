@@ -8,7 +8,7 @@
 #include "debugserial.h"
 
 #ifdef DEBUGMODE
-SoftwareSerial debugSerial(5, 6); //rx, tx
+SoftwareSerial debugSerial(3, 4); //rx, tx //physical pin 5 and 6 respectively
 #endif
 
 void debugserial_init()

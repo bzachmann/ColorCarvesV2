@@ -10,7 +10,7 @@
 
 uint8_t const versionType = (uint8_t)'B';
 uint8_t const versionMajor = 0;
-uint8_t const versionMinor = 1;
+uint8_t const versionMinor = 2;
 
 
 

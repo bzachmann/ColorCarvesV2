@@ -27,19 +27,19 @@ ApEEPROM::ApEEPROM() :
 
 void ApEEPROM::init()
 {
-	debugPrint(F("initializing eeprom\n"));
+	debugPrint(F("initializing eeprom\n\r"));
 	timer.reset();
 
-	debugPrint(F("reading\n"));
+	debugPrint(F("reading\n\r"));
 	read();
 	if(checkChecksum())
 	{
-		debugPrint(F("checksum good... restoring\n"));
+		debugPrint(F("checksum good... restoring\n\r"));
 		restore();
 	}
 	else
 	{
-		debugPrint(F("checksum bad.. reverse restoring\n"));
+		debugPrint(F("checksum bad.. reverse restoring\n\r"));
 		reverseRestore();
 		write();
 	}
@@ -69,18 +69,18 @@ void ApEEPROM::read()
 {
 	debugPrint(F("reading memory at offset: "));
 	debugPrint(EEPROM_OFFSET);
-	debugPrint(F("\n"));
+	debugPrint(F("\n\r"));
 	EEPROM.get(EEPROM_OFFSET, mem);
 
 	debugPrint(F("reading memory at offset: "));
 	debugPrint(sizeof(MemContainer) + EEPROM_OFFSET);
-	debugPrint(F("\n"));
+	debugPrint(F("\n\r"));
 	EEPROM.get(sizeof(MemContainer) + EEPROM_OFFSET, checksumReserve);
 }
 
 void ApEEPROM::write()
 {
-	debugPrint(F("writing eeprom!\n"));
+	debugPrint(F("writing eeprom!\n\r"));
 
 	writeRequiredFlag = false;
 	timer.stop();
