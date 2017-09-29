@@ -40,7 +40,7 @@ public:
 		float angleLimit;
 	};
 
-	TiltSensor(axis_t axis = TILT_AXIS_Z) :
+	TiltSensor(axis_t axis = TILT_AXIS_Y) :
 		bno(DEFAULT_BNO055_ID),
 		initialized(false),
 		angle(0.0),
